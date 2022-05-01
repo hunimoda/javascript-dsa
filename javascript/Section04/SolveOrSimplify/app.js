@@ -1,0 +1,1 @@
+function charCount(str) {}
