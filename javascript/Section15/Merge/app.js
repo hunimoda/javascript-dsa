@@ -11,8 +11,8 @@ function merge(arr1, arr2) {
 
 function mergeSort(arr) {
 	if (arr.length <= 1) return [...arr];
-	return merge(mergeSort(arr.slice(0, arr.length / 2)),
-							 mergeSort(arr.slice(arr.length / 2)));
+	const mid = Math.floor(arr.length / 2);
+	return merge(mergeSort(arr.slice(0, mid)), mergeSort(arr.slice(mid)));
 }
 
-console.log(mergeSort([6, 9, 10, -3, 8, 5, -9, 2], [13, 18, 3, -5, -4, 1, 0, 7]));
+console.log(mergeSort([6, 9, 10, -3, 8, 5, -9, 2, 3], [13, 18, 3, -5, -4, 1, 0, 7]));
