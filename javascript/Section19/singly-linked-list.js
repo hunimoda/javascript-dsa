@@ -1,6 +1,6 @@
 class Node {
-  constructor(val) {
-    this.val = val;
+  constructor(value) {
+    this.value = value;
     this.next = null;
   }
 }
@@ -12,8 +12,8 @@ class SinglyLinkedList {
     this.length = 0;
   }
 
-  push(val) {
-    const node = new Node(val);
+  push(value) {
+    const newNode = new Node(value);
     this.length++ === 0 ? this.head = node : this.tail.next = node;
     this.tail = node;
     return this;
@@ -21,7 +21,7 @@ class SinglyLinkedList {
 
   pop() {
     if (this.length === 0) return undefined;
-    const popValue = this.tail.val;
+    const popValue = this.tail.value;
     if (this.length === 1) {
       this.head = this.tail = null;
     } else {
@@ -36,21 +36,45 @@ class SinglyLinkedList {
   
   shift() {
     if (this.length === 0) return undefined;
-    const shiftValue = this.head.val;
+    const shiftValue = this.head.value;
     if (this.length === 1) this.head = this.tail = null;
     else this.head = this.head.next;
     this.length--;
     return shiftValue;
   }
+
+  unshift(value) {
+    const newNode = new Node(value);
+    newNode.next = this.head;
+    this.head = newNode;
+    if (this.length === 0) this.tail = newNode;
+    this.length++;
+    return this;
+  }
+
+  get(index) {
+    if (index < 0 || this.length <= index) return undefined;
+    let current = this.head;
+    for (let i = 0; i < index; i++)
+      current = current.next;
+    return current;
+  }
+
+  set(index, value) {
+    const setNode = this.get(index);
+    if (!setNode) return false;
+    setNode.value = value;
+    return true;
+  }
 }
 
 const list = new SinglyLinkedList();
 
-list.push("Hello");
-list.push("Byebye");
-list.push("Wow");
+list.unshift(1);
+list.unshift(2);
+list.unshift(3);
+list.set(2, 7);
 
-console.log(list.shift());
-console.log(list.shift());
-console.log(list.shift());
-console.log(list.shift());
+console.log(list.get(0));
+console.log(list.get(1));
+console.log(list.get(2));
