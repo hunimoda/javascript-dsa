@@ -92,6 +92,25 @@ class BinarySearchTree {
     }
     return visited;
   }
+
+  preOrderTraverse(current = this.root) {
+    if (!current) return [];
+    return [current.value,
+            ...this.preOrderTraverse(current.left),
+            ...this.preOrderTraverse(current.right)];
+  }
+
+  inOrderTraverse(current = this.root) {
+    if (!current) return [];
+    return [...this.inOrderTraverse(current.left), current.value,
+            ...this.inOrderTraverse(current.right)];
+  }
+
+  postOrderTraverse(current = this.root) {
+    if (!current) return [];
+    return [...this.postOrderTraverse(current.left),
+            ...this.postOrderTraverse(current.right), current.value];
+  }
 }
 
 const tree = new BinarySearchTree();
@@ -103,3 +122,6 @@ tree.insert(8);
 tree.insert(20);
 
 console.log(tree.breathFirstTraverse());
+console.log(tree.preOrderTraverse());
+console.log(tree.inOrderTraverse());
+console.log(tree.postOrderTraverse());
