@@ -1,3 +1,21 @@
+class Queue {
+  constructor(node) {
+    this.array = [node];
+  }
+
+  push(value) {
+    this.array.push(value);
+  }
+
+  pop() {
+    return this.array.shift();
+  }
+
+  empty() {
+    return this.array.length === 0;
+  }
+}
+
 class Node {
   constructor(value) {
     this.value = value;
@@ -59,18 +77,29 @@ class BinarySearchTree {
   contains(value) {
     return !!this.find(value);
   }
+
+  breathFirstTraverse() {
+    if (!this.root) return;
+
+    const queue = new Queue(this.root);
+    const visited = [];
+
+    while (!queue.empty()) {
+      const popNode = queue.pop();
+      if (popNode.left) queue.push(popNode.left);
+      if (popNode.right) queue.push(popNode.right);
+      visited.push(popNode.value);
+    }
+    return visited;
+  }
 }
 
 const tree = new BinarySearchTree();
-tree.insert(5);
-tree.insert(3);
-tree.insert(4);
-tree.insert(1);
-tree.insert(7);
+tree.insert(10);
 tree.insert(6);
-tree.insert(9);
+tree.insert(15);
+tree.insert(3);
+tree.insert(8);
+tree.insert(20);
 
-console.log(tree.contains(3));  // true
-console.log(tree.contains(7));  // true
-console.log(tree.contains(10));  // false
-console.log(tree.contains(2));  // false
+console.log(tree.breathFirstTraverse());
