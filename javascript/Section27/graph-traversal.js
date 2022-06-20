@@ -35,9 +35,10 @@ class Stack {
 }
 
 class Queue {
-  constructor() {
+  constructor(...args) {
     this.front = null;
     this.back = null;
+    args.forEach(arg => this.enqueue(arg));
   }
 
   enqueue(value) {
@@ -158,6 +159,23 @@ class Graph {
 
     return Array.from(visited);
   }
+
+  bfsIterative() {
+    const startVertex = Object.keys(this.connections)[0];
+    if (!startVertex) return [];
+
+    const visited = new Set([startVertex]);
+    const queue = new Queue(startVertex);
+
+    while (!queue.empty()) {
+      this.connections[queue.dequeue()].forEach(
+          neighbor => {
+            if (!visited.has(neighbor))
+              visited.add(neighbor), queue.enqueue(neighbor);
+          });
+    }
+    return Array.from(visited);
+  }
 }
 
 /******************************************************************************/
@@ -180,4 +198,5 @@ graph.connect("E", "F");
 
 graph.display();
 // console.log(graph.dfsRecursive());
-console.log(graph.dfsIterative());
+// console.log(graph.dfsIterative());
+console.log(graph.bfsIterative());
