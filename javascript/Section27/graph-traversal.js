@@ -1,3 +1,39 @@
+class Node {
+  constructor(value, next = null) {
+    this.value = value;
+    this.next = next;
+  }
+}
+
+class Stack {
+  constructor() {
+    this.head = null;
+    this.size = 0;
+  }
+
+  push(value) {
+    const newNode = new Node(value, this.head);
+    this.head = newNode;
+    return ++this.size;
+  }
+
+  pop() {
+    if (this.empty()) return;
+    const popNode = this.head;
+    this.head = popNode.next;
+    this.size--;
+    return popNode.value;
+  }
+
+  top() {
+    return this.head?.value;
+  }
+
+  empty() {
+    return !this.head;
+  }
+}
+
 class Graph {
   constructor() {
     this.connections = {};
