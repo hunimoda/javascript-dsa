@@ -111,6 +111,26 @@ class Graph {
 
     return Array.from(visited);
   }
+
+  // depth-first search (iterative version)
+  dfsIterative() {
+    const visited = new Set();
+    const toVisit = new Stack();
+    const startVertex = Object.keys(this.connections)[0];
+
+    startVertex && toVisit.push([startVertex]);
+    while (!toVisit.empty()) {
+      const now = toVisit.top().shift();
+      if (!toVisit.top().length) toVisit.pop();
+      if (visited.has(now)) continue;
+
+      visited.add(now);
+      if (this.connections[now].length)
+        toVisit.push([...this.connections[now]]);
+    }
+
+    return Array.from(visited);
+  }
 }
 
 /******************************************************************************/
@@ -132,4 +152,5 @@ graph.connect("D", "F");
 graph.connect("E", "F");
 
 graph.display();
-console.log(graph.dfsRecursive());
+// console.log(graph.dfsRecursive());
+console.log(graph.dfsIterative());
