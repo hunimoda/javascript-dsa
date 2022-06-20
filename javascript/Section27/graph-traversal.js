@@ -34,6 +34,36 @@ class Stack {
   }
 }
 
+class Queue {
+  constructor() {
+    this.front = null;
+    this.back = null;
+  }
+
+  enqueue(value) {
+    const newNode = new Node(value);
+    this.empty() ? this.front = newNode : this.back.next = newNode;
+    this.back = newNode;
+  }
+
+  dequeue() {
+    if (this.empty()) return;
+
+    const removeNode = this.front;
+    this.front = removeNode.next;
+    if (!this.front) this.back = null;
+    return removeNode.value;
+  }
+
+  peek() {
+    if (!this.empty()) return this.front.value;
+  }
+
+  empty() {
+    return !this.front;
+  }
+}
+
 class Graph {
   constructor() {
     this.connections = {};
