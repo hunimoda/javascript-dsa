@@ -118,15 +118,12 @@ class Graph {
     const toVisit = new Stack();
     const startVertex = Object.keys(this.connections)[0];
 
-    startVertex && toVisit.push([startVertex]);
+    startVertex && toVisit.push(startVertex);
     while (!toVisit.empty()) {
-      const now = toVisit.top().shift();
-      if (!toVisit.top().length) toVisit.pop();
-      if (visited.has(now)) continue;
-
-      visited.add(now);
-      if (this.connections[now].length)
-        toVisit.push([...this.connections[now]]);
+      const current = toVisit.pop();
+      visited.add(current);
+      this.connections[current].forEach(
+          neighbor => !visited.has(neighbor) && toVisit.push(neighbor));
     }
 
     return Array.from(visited);
