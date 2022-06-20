@@ -63,15 +63,16 @@ class Graph {
 
   // depth-first search (recursive version)
   dfsRecursive() {
-    const dfsHelper = (vertex) => {
-      visited.add(vertex);
-      this.connections[vertex].forEach(
-          neighbor => !visited.has(neighbor) && dfsHelper(neighbor));
-    }
-
     const visited = new Set();
-    const startVertex = Object.keys(this.connections)[0];
-    startVertex && dfsHelper(startVertex);
+    const connections = this.connections;
+    const startVertex = Object.keys(connections)[0];
+
+    startVertex && (function dfsHelper(vertex) {
+      visited.add(vertex);
+      connections[vertex].forEach(
+          neighbor => !visited.has(neighbor) && dfsHelper(neighbor));
+    })(startVertex);
+
     return Array.from(visited);
   }
 }
