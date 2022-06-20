@@ -60,7 +60,39 @@ class Graph {
     }
     console.log("====================================================");
   }
+
+  // depth-first search (recursive version)
+  dfsRecursive() {
+    const dfsHelper = (vertex) => {
+      visited.add(vertex);
+      this.connections[vertex].forEach(
+          neighbor => !visited.has(neighbor) && dfsHelper(neighbor));
+    }
+
+    const visited = new Set();
+    const startVertex = Object.keys(this.connections)[0];
+    startVertex && dfsHelper(startVertex);
+    return Array.from(visited);
+  }
 }
 
 /******************************************************************************/
 const graph = new Graph();
+
+graph.add("A");
+graph.add("B");
+graph.add("C");
+graph.add("D");
+graph.add("E");
+graph.add("F");
+
+graph.connect("A", "B");
+graph.connect("A", "C");
+graph.connect("B", "D");
+graph.connect("C", "E");
+graph.connect("D", "E");
+graph.connect("D", "F");
+graph.connect("E", "F");
+
+graph.display();
+console.log(graph.dfsRecursive());
